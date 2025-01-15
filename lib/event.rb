@@ -19,7 +19,7 @@ class Event
   end
 
   def sorted_item_list
-    @food_trucks.flat_map { |truck| truck.inventory.keys.map(&:name) }.uniq.sort
+    @food_trucks.flat_map { |truck| truck.inventory.keys.map { |item| item.name } }.uniq.sort
   end
 
   def total_inventory
