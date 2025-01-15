@@ -62,7 +62,7 @@
           null,
           null,
           1,
-          4,
+          8,
           null,
           null,
           1,
@@ -85,8 +85,6 @@
       },
       "/Users/dontehandy/turing_work/1mod/independent_challenges/turbo-enigma/spec/food_truck_spec.rb": {
         "lines": [
-          1,
-          1,
           1,
           null,
           1,
@@ -132,7 +130,6 @@
       "/Users/dontehandy/turing_work/1mod/independent_challenges/turbo-enigma/spec/item_spec.rb": {
         "lines": [
           1,
-          1,
           null,
           1,
           1,
@@ -147,6 +144,6 @@
         "branches": {}
       }
     },
-    "timestamp": 1736962017
+    "timestamp": 1736962698
   }
 }
