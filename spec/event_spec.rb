@@ -67,5 +67,31 @@ RSpec.describe Event do
       
       expect(@event.sorted_item_list).to eq(["Apple Pie (Slice)", "Banana Nice Cream", "Peach Pie (Slice)", "Peach-Raspberry Nice Cream"])
     end
+
+    it 'can tell total inventory across all present trucks' do
+      @event.add_food_truck(@food_truck1)
+      @event.add_food_truck(@food_truck2)
+      @event.add_food_truck(@food_truck3)
+
+      expect(@event.total_inventory).to eq(
+          {
+            "Apple Pie (Slice)" => {
+              :food_trucks=>["Rocky Mountain Pies"], 
+              :quantity=>7
+            },
+            "Banana Nice Cream" => {
+              :food_trucks=>["Ba-Nom-a-Nom"], 
+              :quantity=>50
+            },
+            "Peach Pie (Slice)" => {
+              :food_trucks=>["Rocky Mountain Pies", "Palisade Peach Shack"], 
+              :quantity=>100
+            },
+            "Peach-Raspberry Nice Cream" => {
+              :food_trucks=>["Ba-Nom-a-Nom"], 
+              :quantity=>25
+            }
+          })
+      end
   end
 end
