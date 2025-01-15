@@ -23,4 +23,10 @@ class FoodTruck
         @inventory.each { |item, ammount| revenue += item.price * ammount }
         revenue
     end
+
+    def sell(item, quantity)
+        return false if quantity > check_stock(item)
+
+        @inventory[item] -= quantity
+    end
 end
