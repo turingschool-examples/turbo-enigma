@@ -19,4 +19,28 @@ class Event
   def food_trucks_that_sell(item)
     @food_trucks.find_all {|truck| (truck.check_stock(item) > 0)}
   end
+
+  def sorted_item_list
+    item_arrays = []
+    items = []
+
+    @food_trucks.each {|truck| item_arrays << truck.inventory.keys}
+
+    item_arrays.each do |item_array| 
+      item_array.each do |item|
+        items << item.name
+      end
+    end
+    
+    return items.uniq.sort
+
+  end
+
+  def total_inventory
+    
+  end
+
+  def overstocked_items
+    
+  end
 end
