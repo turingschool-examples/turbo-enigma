@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
+require 'date'
+
 # Create an event to host food trucks
 class Event
-  attr_reader :name, :food_trucks
+  attr_reader :name, :food_trucks, :date
 
-  def initialize(name)
+  def initialize(name, date = Date.today.strftime('%d/%m/%Y'))
     @name = name
     @food_trucks = []
+    @date = date
   end
 
   def add_food_truck(food_truck)
