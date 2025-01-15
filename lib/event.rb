@@ -24,4 +24,18 @@ class Event
     end
   end
 
+  def sorted_item_list()
+    #Returns sorted list of the names of all food items that are at the event
+    unique_items_name_list = @food_trucks.map do |truck|
+
+      # binding.pry
+
+      truck.inventory.keys.map do |key|
+        key.name
+      end
+    end.flatten.uniq
+    
+    unique_items_name_list.sort     #Default is alphabetical
+  end
+
 end
