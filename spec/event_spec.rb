@@ -2,7 +2,7 @@ require 'rspec'
 require './lib/item'
 require './lib/food_truck'
 require './lib/event'
-require 'pry'
+require 'date'
 
 describe Event do
   before(:each) do
@@ -35,6 +35,18 @@ describe Event do
 
   it 'has a collection of food trucks' do
     expect(@event.food_trucks).to eq([])
+  end
+  
+  it 'has a default date' do
+    expect(@event.date).to be_a(Date)
+    expect(@event.date).to eq(Date.new(2023, 02, 24))
+  end
+
+  it 'can be assigned a date other than the default' do
+    @date = Date.new(1999, 12, 31)
+    @event2 = Event.new("North Ruby Street Farmers Market", @date)
+    
+    expect(@event2.date).to eq(@date)
   end
 
   it 'can add food trucks' do
@@ -75,5 +87,11 @@ describe Event do
     expect(@event.total_inventory).to eq({@item1 => {:quantity => 100, :food_trucks => [@food_truck1, @food_truck3]}, @item2 => {:quantity => 7, :food_trucks => [@food_truck1]}, @item4 => {:quantity => 50, :food_trucks => [@food_truck2]}, @item3 => {:quantity => 25, :food_trucks => [@food_truck2]}})
   end
 
-  
+  it 'can display overstocked items' do
+    @event.add_food_truck(@food_truck1)    
+    @event.add_food_truck(@food_truck2)    
+    @event.add_food_truck(@food_truck3)
+
+    expect(@event.overstocked_items).to eq([@item1])
+  end
 end

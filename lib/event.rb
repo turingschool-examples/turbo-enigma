@@ -1,9 +1,10 @@
 class Event
-  attr_reader :name, :food_trucks
+  attr_reader :name, :food_trucks, :date
 
-  def initialize(name)
+  def initialize(name, date = Date.new(2023, 02, 24))
     @name = name
     @food_trucks = []
+    @date = date
   end
 
   def add_food_truck(food_truck)
@@ -53,6 +54,15 @@ class Event
   end
 
   def overstocked_items
-    
+    overstocked = []
+    total_inventory = self.total_inventory
+
+    total_inventory.each do |item, details|
+      if (details[:quantity] > 50) || (details[:food_trucks].size > 1)
+        overstocked << item
+      end
+    end
+
+    return overstocked
   end
 end
