@@ -43,4 +43,13 @@ RSpec.describe FoodTruck do
       expect(food_truck.check_stock(first_item)).to eq(55)
     end
   end
+
+  describe '#potential_revenue' do
+    it 'can find potential revenue' do
+      food_truck.stock(first_item, 35)
+      food_truck.stock(second_item, 7)
+
+      expect(food_truck.potential_revenue).to eq(148.75)
+    end
+  end
 end
