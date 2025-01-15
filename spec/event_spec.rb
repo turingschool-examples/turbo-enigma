@@ -31,11 +31,14 @@ describe Event do
 
     describe '#initialize' do
         it 'exists' do
+            allow(Date).to receive(:today).and_return Date.new(2023, 1 , 8)
+
             event2 = Event.new("South Pearl Street Farmers Market")
 
             expect(event2).to be_a(Event)
             expect(event2.name).to eq("South Pearl Street Farmers Market")
             expect(event2.food_trucks).to eq([])
+            expect(event2.date).to eq("08/01/2023")
         end
     end
 
