@@ -1,4 +1,5 @@
 require './lib/item.rb'
+require 'pry'
 
 RSpec.describe Item do
   before(:each) do

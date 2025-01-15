@@ -50,7 +50,7 @@ RSpec.describe do
   end
 
   it 'can determine potential revenue on food trucks for event' do
-    #Note: this tests is somewhat already done in food_truck_spec.rb, but repeated here to follow interaction pattern
+    #Note: this test is somewhat already done in food_truck_spec.rb, but repeated here to follow interaction pattern
     @food_truck1.stock(@item1, 35)
     @food_truck1.stock(@item2, 7)
     @event.add_food_truck(@food_truck1)
@@ -77,6 +77,7 @@ RSpec.describe do
 
     expect(@event.sorted_item_list()).to eq(["Apple Pie (Slice)", "Banana Nice Cream", "Peach Pie (Slice)", "Peach-Raspberry Nice Cream"])
 
+    #Verify the list updates correctly (and stays sorted / unique elements)
     @food_truck4.stock(@item2, 11)
     @food_truck4.stock(@item5, 17)
     @event.add_food_truck(@food_truck4)
@@ -98,6 +99,7 @@ RSpec.describe do
     @food_truck4.stock(@item5, 37)
     @event.add_food_truck(@food_truck4)
 
+    #OOPS, need to have ITEMS as key, not NAMES - JUST REALIZED, FIX!
     expected_hash = {
       "Apple Pie (Slice)" => {quantity: 49, food_trucks: [@food_truck1, @food_truck4]},
       "Banana Nice Cream" => {quantity: 104, food_trucks: [@food_truck2, @food_truck4]},
@@ -105,6 +107,15 @@ RSpec.describe do
       "Peach Pie (Slice)" => {quantity: 100, food_trucks: [@food_truck1, @food_truck3]},
       "Peach-Raspberry Nice Cream" => {quantity: 25, food_trucks: [@food_truck2]}
     }
+
+    # expected_hash = {
+    #   @item2 => {quantity: 49, food_trucks: [@food_truck1, @food_truck4]},
+    #   @item4 => {quantity: 104, food_trucks: [@food_truck2, @food_truck4]},
+    #   @item5 => {quantity: 37, food_trucks: [@food_truck4]},
+    #   @item1 => {quantity: 100, food_trucks: [@food_truck1, @food_truck3]},
+    #   @item3 => {quantity: 25, food_trucks: [@food_truck2]}
+    # }
+    #Got close, but started breaking code and didn't want to have that happen, so revereted to what's working.
 
     expect(@event.total_inventory()).to eq(expected_hash)
   end
@@ -130,6 +141,13 @@ RSpec.describe do
     @food_truck2.stock(@item2, 7)
 
     expect(@event.overstocked_items()).to eq(["Apple Pie (Slice)", "Banana Nice Cream", "Peach Pie (Slice)", "Peach-Raspberry Nice Cream"])
+  end
+
+  it 'has a starting date that we can set in the past' do
+    allow(@event).to receive(:date).and_return("31/12/24")
+
+    #Doesn't seem to be working - still returning today's date...
+    expect(@event.start_date).to eq("31/12/24")
   end
 
 

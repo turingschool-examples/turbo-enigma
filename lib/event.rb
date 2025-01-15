@@ -1,13 +1,13 @@
 require 'date'
 
 class Event
-  attr_reader :name, :food_trucks
+  attr_reader :name, :food_trucks, :start_date
 
   def initialize(name)
     @name = name
 
     @food_trucks = []
-
+    @start_date = date()
   end
 
   def add_food_truck(food_truck)
@@ -38,12 +38,14 @@ class Event
 
   def total_inventory()
     #Returns hash of all items; for each item, has a hash of the total quantity and array of trucks stocking that item
+    #I suspect there is a slightly faster way to do this with another enumerable arrangement, but I don't see it at the moment...
     total_inventory = {}
 
     sorted_item_list().each do |item_name|
       trucks_with_item = []
       total_item_inventory = 0
 
+      current_item = nil
       @food_trucks.each do |truck|
         #Backtrace to find the item based on its name (argh):
         current_item = truck.inventory.keys.find do |inventory_item|
@@ -71,7 +73,7 @@ class Event
 
   def date()
     #Return the start date of the event. By default, this is today's date.
-    #(I note the date formatting in the README is "dd/mm/yyyy" - I ain't mad at it, just atypical for the US)
+    #(I note the date formatting in the README is "dd/mm/yy" - I ain't mad at it, just atypical for the US)
     Date.today.strftime("%d/%m/%y")
     #It is not clear to me if this should be set in initialize(); that would make more sense from a 'potentially breaks other tests' standpoint, I guess...
   end
