@@ -1,12 +1,15 @@
 # frozen_string_literal: true
 
+require 'date'
+
 # Create an event to host food trucks
 class Event
-  attr_reader :name, :food_trucks
+  attr_reader :name, :food_trucks, :date
 
-  def initialize(name)
+  def initialize(name, date = Date.today.strftime('%d/%m/%Y'))
     @name = name
     @food_trucks = []
+    @date = date
   end
 
   def add_food_truck(food_truck)
@@ -37,6 +40,8 @@ class Event
     total_inventory = {}
     @food_trucks.each do |food_truck|
       food_truck.inventory.each do |item, amount|
+        next if amount.zero?
+
         if total_inventory[item].nil?
           total_inventory[item] = { quantity: amount, food_trucks: [food_truck] }
         else
@@ -52,5 +57,20 @@ class Event
     total_inventory.select do |_item, item_hash|
       item_hash[:quantity] > 50 && item_hash[:food_trucks].length > 1
     end.keys
+  end
+
+  def sell(item, amount) # rubocop:disable Metrics/MethodLength
+    return false if total_inventory[item][:quantity] < amount
+
+    food_trucks_that_sell(item).each do |food_truck|
+      if food_truck.check_stock(item) < amount
+        amount -= food_truck.check_stock(item)
+        food_truck.sell(item, food_truck.check_stock(item))
+      else
+        food_truck.sell(item, amount)
+        break
+      end
+    end
+    true
   end
 end
