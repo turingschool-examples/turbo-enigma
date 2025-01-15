@@ -109,4 +109,28 @@ RSpec.describe do
     expect(@event.total_inventory()).to eq(expected_hash)
   end
 
+  it 'determines overstocked items correctly' do
+    @food_truck1.stock(@item1, 35)
+    @food_truck1.stock(@item2, 7)
+    @event.add_food_truck(@food_truck1)
+    @food_truck2.stock(@item3, 25)
+    @food_truck2.stock(@item4, 50)
+    @event.add_food_truck(@food_truck2)
+    @food_truck3.stock(@item1, 65)
+    @event.add_food_truck(@food_truck3)
+    @food_truck4.stock(@item2, 42)
+    @food_truck4.stock(@item4, 54)
+    @food_truck4.stock(@item5, 37)
+    @event.add_food_truck(@food_truck4)
+
+    expect(@event.overstocked_items()).to eq(["Banana Nice Cream", "Peach Pie (Slice)"])
+
+    #Now change up the inventory to make sure the method catches it:
+    @food_truck4.stock(@item3, 26)
+    @food_truck2.stock(@item2, 7)
+
+    expect(@event.overstocked_items()).to eq(["Apple Pie (Slice)", "Banana Nice Cream", "Peach Pie (Slice)", "Peach-Raspberry Nice Cream"])
+  end
+
+
 end
