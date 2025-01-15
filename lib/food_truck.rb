@@ -4,7 +4,7 @@ class FoodTruck
   def initialize(company_name)
     @name = company_name
 
-    @inventory = {}     #For now, keep everything here.  Later could have arrays of objects for overall inventory, etc. and this could organize it
+    @inventory = {}
   end
 
   def check_stock(item)
@@ -13,7 +13,6 @@ class FoodTruck
   end
 
   def stock(item, number_of_items)
-    #If item already exists, add it to that.  Otherwise create new entry
     if @inventory[item]
       @inventory[item] += number_of_items
     else
@@ -23,8 +22,13 @@ class FoodTruck
 
   def potential_revenue()
     #Based on current inventory (and assuming it were all to be sold)
-    @inventory.to_a.sum do |item|
-      item[0].price * item[1]
+    # @inventory.to_a.sum do |item|
+    #   item[0].price * item[1]
+    # end
+
+    #Alternate approach running the enumerable directly on the hash (I guess a little more readable):
+    @inventory.sum do |item, quantity|
+      item.price * quantity
     end
   end
 

@@ -27,87 +27,45 @@ class Event
   end
 
   def sorted_item_list()
-    #Returns sorted list of the names of all food items that are at the event
     unique_items_name_list = @food_trucks.map do |truck|
-
-      # binding.pry
-
       truck.inventory.keys.map do |key|
         key.name
       end
     end.flatten.uniq
     
-    unique_items_name_list.sort     #Default is alphabetical
+    unique_items_name_list.sort     #Default is alphabetical for strings (yay)
   end
 
   def total_inventory()
     #Returns hash of all items; for each item, has a hash of the total quantity and array of trucks stocking that item
     total_inventory = {}
 
-    # @food_trucks.each do |truck|
-    #   #For each truck, check inventory
-      
-    #   binding.pry
-
-    # end
-
-    #Alternate approach: look at all item names and trace to trucks, etc.
     sorted_item_list().each do |item_name|
-
-      #Create hash:
-      item_info_hash = {}     #Keys are :quantity and :food_trucks
       trucks_with_item = []
-      # current_item = nil
       total_item_inventory = 0
+
       @food_trucks.each do |truck|
-
-        # binding.pry
-
-        #First, backtrace to find the item based on its name (argh):
-        current_item = truck.inventory.keys.to_a.find do |inventory_item|
+        #Backtrace to find the item based on its name (argh):
+        current_item = truck.inventory.keys.find do |inventory_item|
           inventory_item.name == item_name
         end
+
         total_item_inventory += truck.check_stock(current_item)
         trucks_with_item << truck if truck.check_stock(current_item) > 0
       end
-
-      # total_item_inventory = trucks_with_item.sum do |truck|
-      #   truck.check_stock(current_item)
-      # end
-
       
-      # item_info_hash[item_name] = {quantity: total_item_inventory, food_trucks: trucks_with_item}
       total_inventory[item_name] = {quantity: total_item_inventory, food_trucks: trucks_with_item}
-      # total_inventory[item_name]
-      
-      # binding.pry
-      
     end
 
-    # binding.pry
-
     total_inventory
-    # if truck.check_stock() > 0
-    #   #Truck has the item - add it to the array
-    #   trucks_with_item << truck
-    # end
   end
 
   def overstocked_items()
     #An item is overstocked if it is BOTH sold by > 1 food trucks AND total quantity > 50
-    #Fortunately, the new method total_inventory() heps a LOT here!
-    overstocked_food_items = total_inventory().find_all do |item_name, item_hash|
-
-      # binding.pry
-
+    total_inventory().find_all do |item_name, item_hash|
       item_hash[:food_trucks].length > 1 && item_hash[:quantity] > 50
-    end
-
-    # binding.pry
-
-    #Now we have a hash of all food items.  Extract array of just names from this:
-    overstocked_food_items.map do |item|
-      item[0]     #find_all returns array of hashes with name in array as first element, hence the [0]
+    end.map do |item|
+      item[0]   #find_all returns array of hashes with name in array as first element, hence the [0] and need to map
     end
   end
 
