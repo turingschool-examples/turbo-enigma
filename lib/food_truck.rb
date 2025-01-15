@@ -21,4 +21,11 @@ class FoodTruck
     end
   end
 
+  def potential_revenue()
+    #Based on current inventory (and assuming it were all to be sold)
+    @inventory.to_a.sum do |item|
+      item[0].price * item[1]
+    end
+  end
+
 end

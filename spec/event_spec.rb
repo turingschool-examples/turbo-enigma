@@ -46,4 +46,20 @@ RSpec.describe do
     expect(@event.food_trucks_that_sell(@item4)).to eq([@food_truck2])
   end
 
+  it 'can determine potential revenue on food trucks for event' do
+    #Note: this tests is somewhat already done in food_truck_spec.rb, but repeated here to follow interaction pattern
+    @food_truck1.stock(@item1, 35)
+    @food_truck1.stock(@item2, 7)
+    @event.add_food_truck(@food_truck1)
+    @food_truck2.stock(@item3, 25)
+    @food_truck2.stock(@item4, 50)
+    @event.add_food_truck(@food_truck2)
+    @food_truck3.stock(@item1, 65)
+    @event.add_food_truck(@food_truck3)
+
+    expect(@food_truck1.potential_revenue()).to eq(148.75)
+    expect(@food_truck2.potential_revenue()).to eq(345.00)
+    expect(@food_truck3.potential_revenue()).to eq(243.75)
+  end
+
 end
