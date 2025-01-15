@@ -5,11 +5,11 @@ class FoodTruck
 
   def initialize(name)
     @name = name
-    @inventory = Hash.new(0)
+    @inventory = Hash.new(0) #Hash.new creates a new hash with a default value of 0
   end
 
-  def check_stock(item)
-    @inventory[item]
+  def check_stock(item) #returns the quantity of the item
+    @inventory[item] #@inventory is a hash with the item as the key & quantity as the value
   end
 
   def stock(item, quantity)
