@@ -30,7 +30,7 @@ RSpec.describe FoodTruck do
     end
 
     it 'adds to inventory' do
-      expect(food_truck.inventory).to eq({ first_item: 30 })
+      expect(food_truck.inventory).to eq({ first_item => 30 })
     end
 
     it 'adds to stock' do
