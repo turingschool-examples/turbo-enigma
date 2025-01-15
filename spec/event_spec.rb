@@ -19,6 +19,12 @@ RSpec.describe Event do
     it 'has no food trucks' do
       expect(event.food_trucks).to eq([])
     end
+
+    it 'has a date' do
+      allow(Date).to receive(:today).and_return(Date.new(1912, 6, 23))
+
+      expect(event.date).to eq('23/06/1912')
+    end
   end
 
   describe '#add_food_truck' do
