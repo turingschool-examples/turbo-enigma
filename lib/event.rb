@@ -27,4 +27,19 @@ class Event
 
     item_carriers
   end
+
+  def sorted_item_list
+    item_names = []
+
+    @food_trucks.each do |food_truck|
+
+      food_truck.inventory.each do |item, price|
+        if !item_names.include?(item.name)
+          item_names << item.name
+        end
+      end
+    end
+
+    item_names.sort
+  end
 end
