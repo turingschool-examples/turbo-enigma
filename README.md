@@ -1,5 +1,8 @@
 # Food Truck Event
 
+Donte Handy
+123
+
 ## Instructions
 
 * Fork this Repository
@@ -172,7 +175,6 @@ pry(main)> food_truck3.potential_revenue
 
 Use TDD to update the `Event` class so that it adds the following functionality. You need to complete at least 2 of the 3 methods in Iteration 3 to pass, as well as all of Iteration 1 and 2. 
 
-
 1. An `Event` can return a list of *names* of all items the `FoodTrucks` have in stock, sorted alphabetically. This list should not include any duplicate items.
 1. An `Event` can return a hash of total inventory that reports the available inventory of all items sold at the event. Specifically, it should include:
     - All items available for sale, and each item should identify the total inventory/quantity for that item, as well as a list of `FoodTruck`s that sell that item.
@@ -182,7 +184,7 @@ Use TDD to update the `Event` class so that it adds the following functionality.
 | ------------------------- | ---------------------------
 | `sorted_item_list`        | Alphabetically sorted `Array` of all `FoodTruck` item <u>names</u> (no duplicates!). Array of Strings.
 | `total_inventory`         | `Hash` with `Item`s as keys and a sub-hash as the value. The sub-hash should have `quantity` and `food_trucks` keys.(See example below)
-| `overstocked_items`         | `Array` of `Item` objects
+| `overstocked_items`       | `Array` of `Item` objects
 
 ```ruby
 # event.total_inventory
@@ -203,6 +205,102 @@ Use TDD to update the `Event` class so that it adds the following functionality.
 #     ...
 #   }
 ```
+
+```ruby
+pry(main)> event.sorted_item_list
+#=> ["Apple Pie (Slice)", "Banana Nice Cream", "Peach Pie (Slice)", "Peach-Raspberry Nice Cream"]
+
+pry(main)> event.total_inventory
+#=> {
+#     #<Item:0x007f9c56740d48...> => {
+#       quantity: 100,
+#       food_trucks: [#<FoodTruck:0x00007fe1348a1160...>, #<FoodTruck:0x00007fe134910650...>]
+#     },
+#     #<Item:0x007f9c565c0ce8...> => {
+#       quantity: 50,
+#       food_trucks: [#<FoodTruck:0x00007fe1349bed40...>]
+#     }
+#   }
+
+pry(main)> event.overstocked_items
+#=> [#<Item:0x007f9c56740d48...>]
+```
+
+pry(main)> require './lib/item'
+#=> true
+
+pry(main)> require './lib/food_truck'
+#=> true
+
+pry(main)> require './lib/event'
+#=> true
+
+pry(main)> event = Event.new("South Pearl Street Farmers Market")    
+#=> #<Event:0x00007fe134933e20...>
+
+pry(main)> item1 = Item.new({name: 'Peach Pie (Slice)', price: "$3.75"})
+#=> #<Item:0x007f9c56740d48...>
+
+pry(main)> item2 = Item.new({name: 'Apple Pie (Slice)', price: '$2.50'})
+#=> #<Item:0x007f9c565c0ce8...>
+
+pry(main)> item3 = Item.new({name: "Peach-Raspberry Nice Cream", price: "$5.30"})
+#=> #<Item:0x007f9c562a5f18...>
+
+pry(main)> item4 = Item.new({name: "Banana Nice Cream", price: "$4.25"})
+#=> #<Item:0x007f9c56343038...>
+
+pry(main)> food_truck1 = FoodTruck.new("Rocky Mountain Pies")
+#=> #<FoodTruck:0x00007fe1348a1160...>
+
+pry(main)> food_truck1.stock(item1, 35)
+
+pry(main)> food_truck1.stock(item2, 7)
+
+pry(main)> food_truck2 = FoodTruck.new("Ba-Nom-a-Nom")    
+#=> #<FoodTruck:0x00007fe1349bed40...>
+
+pry(main)> food_truck2.stock(item4, 50)
+
+pry(main)> food_truck2.stock(item3, 25)
+
+pry(main)> food_truck3 = FoodTruck.new("Palisade Peach Shack")    
+#=> #<FoodTruck:0x00007fe134910650...>
+
+pry(main)> food_truck3.stock(item1, 65)
+
+pry(main)> event.add_food_truck(food_truck1)
+
+pry(main)> event.add_food_truck(food_truck2)
+
+pry(main)> event.add_food_truck(food_truck3)
+
+pry(main)> event.sorted_item_list
+#=> ["Apple Pie (Slice)", "Banana Nice Cream", "Peach Pie (Slice)", "Peach-Raspberry Nice Cream"]
+
+pry(main)> event.total_inventory
+#=> {
+#     #<Item:0x007f9c56740d48...> => {
+#       quantity: 100,
+#       food_trucks: [#<FoodTruck:0x00007fe1348a1160...>, #<FoodTruck:0x00007fe134910650...>]
+#     },
+#     #<Item:0x007f9c565c0ce8...> => {
+#       quantity: 7,
+#       food_trucks: [#<FoodTruck:0x00007fe1348a1160...>]
+#     },
+#     #<Item:0x007f9c562a5f18...> => {
+#       quantity: 25,
+#       food_trucks: [#<FoodTruck:0x00007fe1349bed40...>]
+#     },
+#     #<Item:0x007f9c56343038...> => {
+#       quantity: 50,
+#       food_trucks: [#<FoodTruck:0x00007fe1349bed40...>]
+#     }
+#   }
+
+pry(main)> event.overstocked_items
+#=> [#<Item:0x007f9c56740d48...>]
+
 
 ## Iteration 4 - Selling Items
 
