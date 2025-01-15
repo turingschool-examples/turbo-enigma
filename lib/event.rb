@@ -37,8 +37,7 @@ class Event
   end
 
   def total_inventory # rubocop:disable Metrics/MethodLength
-    total_inventory = {}
-    @food_trucks.each do |food_truck|
+    @food_trucks.each_with_object({}) do |food_truck, total_inventory|
       food_truck.inventory.each do |item, amount|
         next if amount.zero?
 
@@ -50,7 +49,6 @@ class Event
         end
       end
     end
-    total_inventory
   end
 
   def overstocked_items
