@@ -27,4 +27,52 @@ class Event
 
     item_carriers
   end
+
+  def sorted_item_list
+    item_names = []
+
+    @food_trucks.each do |food_truck|
+
+      food_truck.inventory.each do |item, price|
+        if !item_names.include?(item.name)
+          item_names << item.name
+        end
+      end
+    end
+
+    item_names.sort
+  end
+
+  def total_inventory
+    total_inventory = {}
+
+    @food_trucks.each do |food_truck|
+      food_truck.inventory.each do |item, amount|
+      
+        if total_inventory[item.name] != nil
+        total_inventory[item.name][:quantity] += amount
+        total_inventory[item.name][:food_trucks] << food_truck.name unless total_inventory[item.name][:food_trucks].include?(food_truck.name)
+        else
+          total_inventory[item.name] = { quantity: amount, food_trucks: [food_truck.name] }
+        end
+      end
+    end
+
+    total_inventory
+  end
+
+  def overstocked_items
+    overstocked = []
+
+    inventory = total_inventory
+
+    inventory.each do |item_name, info|
+      
+      if info[:quantity] > 50 && info[:food_trucks].length > 1
+        overstocked << item_name
+      end
+    end
+
+    overstocked
+  end
 end
