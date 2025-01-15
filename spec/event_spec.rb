@@ -15,8 +15,8 @@ RSpec.describe Event do
     @event = Event.new("South Pearl Street Farmers Market")
 
     @food_truck1.stock(@item1, 35)
-    @food_truck1.stock(@item2, 7)
-    @food_truck2.stock(@item4, 50)
+    @food_truck1.stock(@item2, 75)
+    @food_truck2.stock(@item4, 51)
     @food_truck2.stock(@item3, 25)
     @food_truck3.stock(@item1, 65)
   end
@@ -63,18 +63,49 @@ RSpec.describe Event do
       @event.add_food_truck(@food_truck3)
       expect(@event.sorted_item_list).to eq(['Apple Pie (Slice)', "Banana Nice Cream", 'Peach Pie (Slice)', "Peach-Raspberry Nice Cream"])
     end
+  end
+end
 
+RSpec.describe Event do
+    before(:each) do
+    @food_truck1 = FoodTruck.new("Rocky Mountain Pies")
+    @food_truck2 = FoodTruck.new("Ba-Nom-a-Nom")
+    @food_truck3 = FoodTruck.new("Palisade Peach Shack")
+
+    @item1 = Item.new({name: 'Peach Pie (Slice)', price: "$3.75"})
+    @item2 = Item.new({name: 'Apple Pie (Slice)', price: '$2.50'})
+    @item3 = Item.new({name: "Peach-Raspberry Nice Cream", price: "$5.30"})
+    @item4 = Item.new({name: "Banana Nice Cream", price: "$4.25"})
+
+    @event = Event.new("South Pearl Street Farmers Market")
+
+    @food_truck1.stock(@item1, 35)
+    @food_truck1.stock(@item2, 75)
+    @food_truck2.stock(@item4, 51)
+    @food_truck2.stock(@item3, 25)
+    @food_truck3.stock(@item1, 65)
+  end
+  describe 'total' do
     it 'can grab total inventory' do
       @event.add_food_truck(@food_truck1)
       @event.add_food_truck(@food_truck2)
       @event.add_food_truck(@food_truck3)
-      expect(@event.total_inventory).to eq({})
+
+      list = {
+              @item1 => {quantity: 100, food_trucks: [@food_truck1, @food_truck3]},
+              @item2 => {quantity: 75, food_trucks: [@food_truck1]},
+              @item4 => {quantity: 51, food_trucks: [@food_truck2]},
+              @item3 => {quantity: 25, food_trucks: [@food_truck2]}
+            }
+      
+      expect(@event.total_inventory).to eq(list)
     end
 
-    xit 'can find overstocked items' do
+    it 'can find overstocked items' do
       @event.add_food_truck(@food_truck1)
       @event.add_food_truck(@food_truck2)
       @event.add_food_truck(@food_truck3)
+
       expect(@event.overstocked_items).to eq([@item1])
     end
   end
@@ -86,7 +117,17 @@ end
     # @item4 = Item.new({name: "Banana Nice Cream", price: "$4.25"})
 
     # @food_truck1.stock(@item1, 35)
-    # @food_truck1.stock(@item2, 7)
-    # @food_truck2.stock(@item4, 50)
+    # @food_truck1.stock(@item2, 75)
+    # @food_truck2.stock(@item4, 51)
     # @food_truck2.stock(@item3, 25)
     # @food_truck3.stock(@item1, 65)
+
+  #   {@item1 => {quantity: 100, food_trucks: [@food_truck1, @food_truck3]},
+  #   @item2 => {quantity: 75, food_truck: [@food_truck1]},
+  #   @item3 => {quantity: 25, food_truck: [@food_truck2]},
+  #   @item4 => {quantity: 51, food_truck: [@food_truck2]}
+  # }
+
+
+  ######## It took me forever to find that I forgot the "s" of food_truckSSSS. my expected and got looked the same
+  

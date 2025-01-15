@@ -26,10 +26,17 @@ class Event
   end
 
   def total_inventory
-    binding.pry
+    @food_trucks.each_with_object({}) do |truck, inventory|
+      truck.inventory.each do |item, quantity|
+        inventory[item] ||= { quantity: 0, food_trucks: [] }
+        inventory[item][:quantity] += quantity
+        inventory[item][:food_trucks] << truck
+      end
+    end
   end
 
   def overstocked_items
-    # binding.pry
+    stock = total_inventory.select { |item, inventory| inventory[:quantity] > 50 && inventory[:food_trucks].size > 1}
+    stock.keys
   end
 end
