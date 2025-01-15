@@ -1,6 +1,7 @@
 require 'rspec'
 require './lib/item'
 require './lib/food_truck'
+require 'pry'
 
 describe FoodTruck do
   before(:each) do
@@ -41,5 +42,11 @@ describe FoodTruck do
     @food_truck.stock(@item1, 55)
     @food_truck.stock(@item2, 12)
     expect(@food_truck.inventory).to eq({@item1 => 55, @item2 => 12})
+  end
+
+  it 'can display potential revenue' do
+    @food_truck.stock(@item1, 55)
+    @food_truck.stock(@item2, 12)
+    expect(@food_truck.potential_revenue).to eq(236.25)
   end
 end
