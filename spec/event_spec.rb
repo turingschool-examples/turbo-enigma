@@ -7,5 +7,9 @@ RSpec.describe Event do
 
   describe '#initialize' do
     it { is_expected.to be_instance_of described_class }
+
+    it 'has a name' do
+      expect(event.name).to eq('South Pearl Street Farmers Market')
+    end
   end
 end
