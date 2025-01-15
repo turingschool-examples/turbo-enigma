@@ -32,4 +32,19 @@ class Event
       end
     end.flatten.uniq.sort
   end
+
+  def total_inventory # rubocop:disable Metrics/MethodLength
+    total_inventory = {}
+    @food_trucks.each do |food_truck|
+      food_truck.inventory.each do |item, amount|
+        if total_inventory[item].nil?
+          total_inventory[item] = { quantity: amount, food_trucks: [food_truck] }
+        else
+          total_inventory[item][:quantity] += amount
+          total_inventory[item][:food_trucks] << food_truck
+        end
+      end
+    end
+    total_inventory
+  end
 end
