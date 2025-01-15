@@ -30,4 +30,8 @@ class FoodTruck
     end
     potential_revenue
   end
+
+  def sell(item, amount)
+    @inventory[item] -= amount
+  end
 end
