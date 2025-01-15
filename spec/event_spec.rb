@@ -58,13 +58,15 @@ RSpec.describe Event do
       end
     end
 
-    describe '#sorted_item_list' do
-      expect(event.sorted_item_list).to eq([
-                                             'Apple Pie (Slice)',
-                                             'Banana Nice Cream',
-                                             'Peach-Raspberry Nice Cream',
-                                             'Peach Pie (Slice)'
-                                           ])
+    describe '#sorted_item_list' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+      it 'can get sorted item list' do # rubocop:disable RSpec/ExampleLength
+        expect(event.sorted_item_list).to eq([
+                                               'Apple Pie (Slice)',
+                                               'Banana Nice Cream',
+                                               'Peach Pie (Slice)',
+                                               'Peach-Raspberry Nice Cream'
+                                             ])
+      end
     end
   end
 end
