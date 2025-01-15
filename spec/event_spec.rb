@@ -2,6 +2,7 @@ require 'rspec'
 require './lib/event'
 require './lib/food_truck'
 require './lib/item'
+require 'pry'
 
 describe Event do
     before :each do
@@ -54,6 +55,16 @@ describe Event do
         it 'can lists the trucks that sell a givin item' do
             expect(@event.trucks_that_sell(@item1)).to eq([@food_truck1, @food_truck3])
             expect(@event.trucks_that_sell(@item4)).to eq([@food_truck2])
+        end
+    end
+
+    describe '#sorted_item_list' do
+        it 'can return an alphabetical list off all items being sold' do
+            expect(@event.sorted_item_list).to eq(["Apple Pie (Slice)",
+                                                    "Banana Nice Cream",
+                                                    "Peach Pie (Slice)",
+                                                    "Peach-Raspberry Nice Cream"
+                                                ])
         end
     end
 end
