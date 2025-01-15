@@ -56,6 +56,25 @@ class Event
         items
     end
 
+    def sell(item, quantity)
+        return false if total_quantity(item) < quantity
+        to_sell = quantity
+
+        food_trucks.each do |truck|
+            stock = truck.check_stock(item)
+            
+            if stock > to_sell
+                truck.sell(item, to_sell)
+                break
+            elsif stock > 0
+                truck.sell(item, stock)
+                to_sell -= stock
+            end
+        end
+
+        true
+    end
+
     private
 
     def all_items
