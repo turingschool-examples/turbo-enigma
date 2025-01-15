@@ -93,5 +93,13 @@ RSpec.describe Event do
             }
           })
       end
+
+      it 'can tell overstocked items' do
+        @event.add_food_truck(@food_truck1)
+        @event.add_food_truck(@food_truck2)
+        @event.add_food_truck(@food_truck3)
+
+        expect(@event.overstocked_items).to eq(["Peach Pie (Slice)"])
+      end
   end
 end
