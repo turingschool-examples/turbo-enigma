@@ -53,4 +53,16 @@ describe FoodTruck do
             expect(@food_truck.check_stock(@item2)).to eq(12)
         end
     end
+
+    describe '#potential_revenue' do
+        it 'can return its potential revenue' do
+            allow(@item1).to receive(:price).and_return(3.75)
+            allow(@item2).to receive(:price).and_return(2.50)
+
+            @food_truck.stock(@item1, 35)
+            @food_truck.stock(@item2, 7)
+
+            expect(@food_truck.potential_revenue).to eq(148.75)
+        end
+    end
 end
