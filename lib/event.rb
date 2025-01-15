@@ -15,4 +15,16 @@ class Event
       food_truck.name
     end
   end
+
+  def food_trucks_that_sell(item)
+    item_carriers = []
+
+    @food_trucks.each do |food_truck|
+      if food_truck.check_stock(item) != 0
+        item_carriers << food_truck
+      end
+    end
+
+    item_carriers
+  end
 end
