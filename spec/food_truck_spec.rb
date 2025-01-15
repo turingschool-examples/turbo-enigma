@@ -6,6 +6,7 @@ describe FoodTruck do
         @food_truck = FoodTruck.new("Rocky Mountain Pies")
 
         @item1 = double('First Item')
+        @item2 = double('Second Item')
     end
 
     describe '#initialize' do
@@ -42,6 +43,14 @@ describe FoodTruck do
             @food_truck.stock(@item1, 25)
 
             expect(@food_truck.check_stock(@item1)).to eq 55
+        end
+
+        it 'can stock more than one type of item' do
+            @food_truck.stock(@item1, 55)
+            @food_truck.stock(@item2, 12)
+
+            expect(@food_truck.check_stock(@item1)).to eq(55)
+            expect(@food_truck.check_stock(@item2)).to eq(12)
         end
     end
 end
