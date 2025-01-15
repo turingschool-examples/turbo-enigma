@@ -28,17 +28,25 @@ class Event
         all_items.each do |item|
             item_hash = {}
 
-            total_quantity = trucks_that_sell(item).sum do |truck|
-                truck.check_stock(item)
-            end
-
-            item_hash[:quantity] = total_quantity
+            item_hash[:quantity] = total_quantity(item)
             item_hash[:food_trucks] = trucks_that_sell(item)
 
             total_inventory[item] = item_hash
         end
 
         total_inventory
+    end
+
+    def overstocked_items
+        items = []
+
+        all_items.each do |item|
+            if total_quantity(item) > 50 && trucks_that_sell(item).size > 1
+                items << item
+            end
+        end
+
+        items
     end
 
     private
@@ -51,5 +59,9 @@ class Event
             end
         end
         items
+    end
+
+    def total_quantity(item)
+        trucks_that_sell(item).sum { |truck| truck.check_stock(item) }
     end
 end

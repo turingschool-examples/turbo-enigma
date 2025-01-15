@@ -90,4 +90,10 @@ describe Event do
             })
         end
     end
+
+    describe '#overstocked_items' do
+        it 'can list any items that are overstocked' do
+            expect(@event.overstocked_items).to eq([@item1])
+        end
+    end
 end
