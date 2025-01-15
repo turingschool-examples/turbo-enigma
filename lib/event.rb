@@ -56,4 +56,11 @@ class Event
       item_hash[:quantity] > 50 && item_hash[:food_trucks].length > 1
     end.keys
   end
+
+  def sell(item, amount)
+    return false if total_inventory[item][:quantity] < amount
+
+    
+    true
+  end
 end
