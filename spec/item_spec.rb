@@ -15,7 +15,7 @@ RSpec.describe Item do
     end
 
     it 'has a price' do
-      expect(first_item.price).to eq(2.50)
+      expect(first_item.price).to eq(3.75)
     end
   end
 end
