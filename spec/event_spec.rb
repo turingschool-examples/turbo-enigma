@@ -2,6 +2,7 @@ require 'rspec'
 require './lib/event'
 require './lib/food_truck'
 require './lib/item'
+require 'pry'
 
 describe Event do
     before :each do
@@ -54,6 +55,45 @@ describe Event do
         it 'can lists the trucks that sell a givin item' do
             expect(@event.trucks_that_sell(@item1)).to eq([@food_truck1, @food_truck3])
             expect(@event.trucks_that_sell(@item4)).to eq([@food_truck2])
+        end
+    end
+
+    describe '#sorted_item_list' do
+        it 'can return an alphabetical list off all items being sold' do
+            expect(@event.sorted_item_list).to eq(["Apple Pie (Slice)",
+                                                    "Banana Nice Cream",
+                                                    "Peach Pie (Slice)",
+                                                    "Peach-Raspberry Nice Cream"
+                                                ])
+        end
+    end
+
+    describe '#total_inventory' do
+        it 'can return the inventory of the entire event' do
+            expect(@event.total_inventory).to eq({
+                @item1 => {
+                    quantity: 100,
+                    food_trucks: [@food_truck1, @food_truck3]
+                },
+                @item2 => {
+                    quantity: 7,
+                    food_trucks: [@food_truck1]
+                },
+                @item3 => {
+                    quantity: 25,
+                    food_trucks: [@food_truck2]
+                },
+                @item4 => {
+                    quantity: 50,
+                    food_trucks: [@food_truck2]
+                }
+            })
+        end
+    end
+
+    describe '#overstocked_items' do
+        it 'can list any items that are overstocked' do
+            expect(@event.overstocked_items).to eq([@item1])
         end
     end
 end
