@@ -37,7 +37,7 @@ RSpec.describe Event do
     end
   end
 
-  describe '#food_trucks_that_sell' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+  describe 'Methods with items' do # rubocop:disable RSpec/MultipleMemoizedHelpers
     let(:first_item) { instance_double(Item, name: 'Peach Pie (Slice)', price: 3.75) }
     let(:second_item) { instance_double(Item, name: 'Apple Pie (Slice)', price: 2.50) }
     let(:third_item) { instance_double(Item, name: 'Peach-Raspberry Nice Cream', price: 5.30) }
@@ -52,8 +52,19 @@ RSpec.describe Event do
       allow(third_food_truck).to receive(:inventory).and_return({ first_item => 65 })
     end
 
-    it 'can find trucks that sell item' do
-      expect(event.food_trucks_that_sell(first_item)).to eq([first_food_truck, third_food_truck])
+    describe '#food_trucks_that_sell' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+      it 'can find trucks that sell item' do
+        expect(event.food_trucks_that_sell(first_item)).to eq([first_food_truck, third_food_truck])
+      end
+    end
+
+    describe '#sorted_item_list' do
+      expect(event.sorted_item_list).to eq([
+                                             'Apple Pie (Slice)',
+                                             'Banana Nice Cream',
+                                             'Peach-Raspberry Nice Cream',
+                                             'Peach Pie (Slice)'
+                                           ])
     end
   end
 end
