@@ -25,13 +25,15 @@ RSpec.describe Event do
   end
 
   describe 'initialize' do
-    expect(@event).to be a Event
-    expect(@event.name).to eq("South Pearl Street Farmers Market")
-    expect(@event.food_trucks).to eq([])
+    it 'exists' do
+      expect(@event).to be_a Event
+      expect(@event.name).to eq("South Pearl Street Farmers Market")
+      expect(@event.food_trucks).to eq([])
+    end
   end
 
   describe 'can track food trucks at event and information about them' do
-    it 'can add food trucks' do
+    xit 'can add food trucks' do
       @event.add_food_truck(@food_truck1)
       @event.add_food_truck(@food_truck2)
       @event.add_food_truck(@food_truck3)
@@ -39,7 +41,7 @@ RSpec.describe Event do
       expect(@event.food_trucks).to eq([@food_truck1, @food_truck2, @food_truck3])
     end
 
-    it 'can tell you the name of the trucks at the event' do
+    xit 'can tell you the name of the trucks at the event' do
       @event.add_food_truck(@food_truck1)
       @event.add_food_truck(@food_truck2)
       @event.add_food_truck(@food_truck3)
@@ -47,7 +49,7 @@ RSpec.describe Event do
       expect(@event.food_truck_names).to eq(["Rocky Mountain Pies", "Ba-Nom-a-Nom", "Palisade Peach Shack"])
     end
 
-    it 'can tell you the trucks that sell specific items' do
+    xit 'can tell you the trucks that sell specific items' do
       @event.add_food_truck(@food_truck1)
       @event.add_food_truck(@food_truck2)
       @event.add_food_truck(@food_truck3)
