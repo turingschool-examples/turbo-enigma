@@ -67,4 +67,27 @@ describe Event do
                                                 ])
         end
     end
+
+    describe '#total_inventory' do
+        it 'can return the inventory of the entire event' do
+            expect(@event.total_inventory).to eq({
+                @item1 => {
+                    quantity: 100,
+                    food_trucks: [@food_truck1, @food_truck3]
+                },
+                @item2 => {
+                    quantity: 7,
+                    food_trucks: [@food_truck1]
+                },
+                @item3 => {
+                    quantity: 25,
+                    food_trucks: [@food_truck2]
+                },
+                @item4 => {
+                    quantity: 50,
+                    food_trucks: [@food_truck2]
+                }
+            })
+        end
+    end
 end

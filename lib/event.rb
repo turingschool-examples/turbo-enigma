@@ -19,11 +19,37 @@ class Event
     end
 
     def sorted_item_list
-        items = []
-        @food_trucks.each do |truck|  
-            truck_items = truck.inventory.keys
-            truck_items.each { |item| items << item.name if !items.include?(item.name) }
+        all_items.map { |item| item.name }.sort
+    end
+
+    def total_inventory
+        total_inventory = {}
+
+        all_items.each do |item|
+            item_hash = {}
+
+            total_quantity = trucks_that_sell(item).sum do |truck|
+                truck.check_stock(item)
+            end
+
+            item_hash[:quantity] = total_quantity
+            item_hash[:food_trucks] = trucks_that_sell(item)
+
+            total_inventory[item] = item_hash
         end
-        items.sort
+
+        total_inventory
+    end
+
+    private
+
+    def all_items
+        items = []
+        @food_trucks.each do |truck|
+            truck.inventory.each do |item, quantity| 
+                items << item if !items.include?(item)
+            end
+        end
+        items
     end
 end
