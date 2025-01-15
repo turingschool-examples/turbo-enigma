@@ -24,4 +24,12 @@ class Event
       food_truck.inventory[item]
     end
   end
+
+  def sorted_item_list
+    @food_trucks.map do |food_truck|
+      food_truck.inventory.keys.map do |item| # rubocop:disable Style/SymbolProc
+        item.name
+      end
+    end.flatten.uniq.sort
+  end
 end
