@@ -1,3 +1,5 @@
+#create FoodTruck with attributes (name, inventory)
+
 class FoodTruck
   attr_reader :name, :inventory
 
