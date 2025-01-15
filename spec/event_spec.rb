@@ -91,5 +91,11 @@ RSpec.describe Event do
                                             })
       end
     end
+
+    describe '#overstocked_items' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+      it 'can get overstocked items' do
+        expect(event.overstocked_items).to eq([first_item])
+      end
+    end
   end
 end
