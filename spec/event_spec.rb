@@ -2,7 +2,7 @@ require 'rspec'
 require './lib/item'
 require './lib/food_truck'
 require './lib/event'
-require 'date'
+require 'time'
 
 describe Event do
   before(:each) do
@@ -38,15 +38,15 @@ describe Event do
   end
   
   it 'has a default date' do
-    expect(@event.date).to be_a(Date)
-    expect(@event.date).to eq(Date.new(2023, 02, 24))
+    expect(@event.date).to be_a(String)
+    expect(@event.date).to eq("24/02/2023")
   end
 
   it 'can be assigned a date other than the default' do
-    @date = Date.new(1999, 12, 31)
+    @date = Time.new(1999, 12, 31)
     @event2 = Event.new("North Ruby Street Farmers Market", @date)
-    
-    expect(@event2.date).to eq(@date)
+
+    expect(@event2.date).to eq("31/12/1999")
   end
 
   it 'can add food trucks' do

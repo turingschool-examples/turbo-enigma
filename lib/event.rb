@@ -1,10 +1,14 @@
 class Event
-  attr_reader :name, :food_trucks, :date
+  attr_reader :name, :food_trucks
 
-  def initialize(name, date = Date.new(2023, 02, 24))
+  def initialize(name, date = Time.new(2023, 02, 24))
     @name = name
     @food_trucks = []
     @date = date
+  end
+
+  def date
+    return @date.strftime('%d/%m/%Y')
   end
 
   def add_food_truck(food_truck)
