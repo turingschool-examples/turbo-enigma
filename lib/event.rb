@@ -11,7 +11,7 @@ class Event
   end
 
   def food_truck_names
-    @food_trucks.map(&:name)
+    @food_trucks.map { |truck| truck.name }
   end
 
   def food_trucks_that_sell(item)
