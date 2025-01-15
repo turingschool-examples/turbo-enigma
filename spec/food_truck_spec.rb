@@ -36,4 +36,18 @@ RSpec.describe FoodTruck do
     @food_truck.stock(@item2, 7)
     expect(@food_truck.potential_revenue).to eq(148.75)
   end
+#edge cases
+  it 'can stock the same item multiple times' do
+    @food_truck.stock(@item1, 30)
+    @food_truck.stock(@item1, 20)
+    expect(@food_truck.check_stock(@item1)).to eq(50)
+  end
+
+  it 'returns 0 for items not stocked' do
+    expect(@food_truck.check_stock(@item3)).to eq(0)
+  end
+
+  it 'calculates potential revenue with empty inventory' do
+    expect(@food_truck.potential_revenue).to eq(0)
+  end
 end

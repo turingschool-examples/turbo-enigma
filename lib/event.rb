@@ -1,3 +1,5 @@
+#create an Event with attributes (name, food_trucks)
+
 class Event
   attr_reader :name, :food_trucks
 

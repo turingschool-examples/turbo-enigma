@@ -16,7 +16,7 @@ class FoodTruck
     @inventory[item] += quantity #syntax for adding to a hash is hash[key] += value
   end
 
-  def potential_revenue
+  def potential_revenue #is calculated by multiplying the price of each item by the quantity of that item
     @inventory.sum { |item, quantity| item.price * quantity }
   end
 end
