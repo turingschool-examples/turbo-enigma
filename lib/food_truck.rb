@@ -17,4 +17,10 @@ class FoodTruck
             @inventory[item] = ammount
         end
     end
+
+    def potential_revenue
+        revenue = 0.0
+        @inventory.each { |item, ammount| revenue += item.price * ammount }
+        revenue
+    end
 end
