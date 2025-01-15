@@ -40,6 +40,8 @@ class Event
     total_inventory = {}
     @food_trucks.each do |food_truck|
       food_truck.inventory.each do |item, amount|
+        next if amount.zero?
+
         if total_inventory[item].nil?
           total_inventory[item] = { quantity: amount, food_trucks: [food_truck] }
         else
@@ -57,10 +59,18 @@ class Event
     end.keys
   end
 
-  def sell(item, amount)
+  def sell(item, amount) # rubocop:disable Metrics/MethodLength
     return false if total_inventory[item][:quantity] < amount
 
-    
+    food_trucks_that_sell(item).each do |food_truck|
+      if food_truck.check_stock(item) < amount
+        amount -= food_truck.check_stock(item)
+        food_truck.sell(item, food_truck.check_stock(item))
+      else
+        food_truck.sell(item, amount)
+        break
+      end
+    end
     true
   end
 end
