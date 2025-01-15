@@ -35,5 +35,9 @@ RSpec.describe Event do # rubocop:disable RSpec/MultipleMemoizedHelpers
     it 'can add food trucks' do
       expect(event.food_trucks).to eq([first_food_truck, second_food_truck, third_food_truck])
     end
+
+    it 'can get food truck names' do
+      expect(event.food_truck_names).to eq(['Rocky Mountain Pies', 'Ba-Nom-a-Nom', 'Palisade Peach Shack'])
+    end
   end
 end
