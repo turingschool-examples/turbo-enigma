@@ -84,4 +84,29 @@ RSpec.describe do
     expect(@event.sorted_item_list()).to eq(["Apple Pie (Slice)", "Banana Nice Cream", "Peach Cobbler", "Peach Pie (Slice)", "Peach-Raspberry Nice Cream"])
   end
 
+  it 'can generate a hash containing total inventory for all trucks' do
+    @food_truck1.stock(@item1, 35)
+    @food_truck1.stock(@item2, 7)
+    @event.add_food_truck(@food_truck1)
+    @food_truck2.stock(@item3, 25)
+    @food_truck2.stock(@item4, 50)
+    @event.add_food_truck(@food_truck2)
+    @food_truck3.stock(@item1, 65)
+    @event.add_food_truck(@food_truck3)
+    @food_truck4.stock(@item2, 42)
+    @food_truck4.stock(@item4, 54)
+    @food_truck4.stock(@item5, 37)
+    @event.add_food_truck(@food_truck4)
+
+    expected_hash = {
+      "Apple Pie (Slice)" => {quantity: 49, food_trucks: [@food_truck1, @food_truck4]},
+      "Banana Nice Cream" => {quantity: 104, food_trucks: [@food_truck2, @food_truck4]},
+      "Peach Cobbler" => {quantity: 37, food_trucks: [@food_truck4]},
+      "Peach Pie (Slice)" => {quantity: 100, food_trucks: [@food_truck1, @food_truck3]},
+      "Peach-Raspberry Nice Cream" => {quantity: 25, food_trucks: [@food_truck2]}
+    }
+
+    expect(@event.total_inventory()).to eq(expected_hash)
+  end
+
 end
