@@ -24,11 +24,9 @@ class FoodTruck
   end
 
   def potential_revenue
-    potential_revenue = 0
-    @inventory.each do |item, amount|
-      potential_revenue += item.price * amount
+    @inventory.sum do |item, amount|
+      item.price * amount
     end
-    potential_revenue
   end
 
   def sell(item, amount)
