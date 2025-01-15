@@ -4,6 +4,21 @@ class FoodTruck
   def initialize(name)
     @name = name
     @inventory = {}
-    @stock = 0
+  end
+
+  def check_stock(item)
+    if @inventory == {}
+      return 0
+    else
+      return @inventory[:item]
+    end
+  end
+
+  def stock(item, amount)
+    @inventory[item] += amount
+  end
+
+  def potential_revenue
+    
   end
 end
