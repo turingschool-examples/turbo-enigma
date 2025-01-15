@@ -103,5 +103,38 @@ RSpec.describe Event do
         expect(event.overstocked_items).to eq([first_item])
       end
     end
+
+    describe '#sell' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+      it 'cannot sell more items than it has' do
+        expect(event.sell(second_item, 8)).to be false
+      end
+
+      it 'can sell items' do
+        expect(event.sell(first_item, 40)).to be true
+      end
+
+      it 'can sell items from multiple trucks' do # rubocop:disable RSpec/ExampleLength
+        event.sell(first_item, 40)
+
+        expect(total_inventory).to eq({
+                                        first_item => {
+                                          quantity: 60,
+                                          food_trucks: [third_food_truck]
+                                        },
+                                        second_item => {
+                                          quantity: 7,
+                                          food_trucks: [first_food_truck]
+                                        },
+                                        third_item => {
+                                          quantity: 25,
+                                          food_trucks: [second_food_truck]
+                                        },
+                                        fourth_item => {
+                                          quantity: 50,
+                                          food_trucks: [second_food_truck]
+                                        }
+                                      })
+      end
+    end
   end
 end
