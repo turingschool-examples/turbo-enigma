@@ -64,6 +64,19 @@ RSpec.describe Event do
     }
     expect(@event.total_inventory).to eq(expected)
   end
+#extra
+  it 'can return total inventory with multiple food trucks stocking the same item' do
+    @food_truck1.stock(@item1, 35)
+    @food_truck2.stock(@item1, 20)
+    @food_truck3.stock(@item1, 45)
+    @event.add_food_truck(@food_truck1)
+    @event.add_food_truck(@food_truck2)
+    @event.add_food_truck(@food_truck3)
+    expected = {
+      @item1 => { quantity: 100, food_trucks: [@food_truck1, @food_truck2, @food_truck3] }
+    }
+    expect(@event.total_inventory).to eq(expected)
+  end
 
   it 'can return overstocked items' do
     @food_truck1.stock(@item1, 35)
@@ -73,5 +86,15 @@ RSpec.describe Event do
     @event.add_food_truck(@food_truck2)
     @event.add_food_truck(@food_truck3)
     expect(@event.overstocked_items).to eq([@item1])
+  end
+#extra
+  it 'returns an empty array when there are no overstocked items' do
+    @food_truck1.stock(@item1, 35)
+    @food_truck2.stock(@item2, 50)
+    @food_truck3.stock(@item3, 25)
+    @event.add_food_truck(@food_truck1)
+    @event.add_food_truck(@food_truck2)
+    @event.add_food_truck(@food_truck3)
+    expect(@event.overstocked_items).to eq([])
   end
 end
