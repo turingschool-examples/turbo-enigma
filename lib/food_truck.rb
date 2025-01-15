@@ -11,6 +11,10 @@ class FoodTruck
     end
 
     def stock(item, ammount)
-        @inventory[item] = ammount
+        if @inventory[item]
+            @inventory[item] += ammount
+        else
+            @inventory[item] = ammount
+        end
     end
 end
