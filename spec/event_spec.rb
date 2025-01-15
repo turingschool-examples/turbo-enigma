@@ -33,7 +33,7 @@ RSpec.describe Event do
   end
 
   describe 'can track food trucks at event and information about them' do
-    xit 'can add food trucks' do
+    it 'can add food trucks' do
       @event.add_food_truck(@food_truck1)
       @event.add_food_truck(@food_truck2)
       @event.add_food_truck(@food_truck3)
