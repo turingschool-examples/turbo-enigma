@@ -5,9 +5,9 @@ require_relative 'spec_helper'
 RSpec.describe Event do
   subject(:event) { described_class.new('South Pearl Street Farmers Market') }
 
-  let(:first_food_truck) { instance_double(FoodTruck, name: 'Rocky Mountain Pies') }
-  let(:second_food_truck) { instance_double(FoodTruck, name: 'Ba-Nom-a-Nom') }
-  let(:third_food_truck) { instance_double(FoodTruck, name: 'Palisade Peach Shack') }
+  let(:first_food_truck) { FoodTruck.new('Rocky Mountain Pies') }
+  let(:second_food_truck) { FoodTruck.new('Ba-Nom-a-Nom') }
+  let(:third_food_truck) { FoodTruck.new('Palisade Peach Shack') }
 
   describe '#initialize' do
     it { is_expected.to be_instance_of described_class }
@@ -53,9 +53,11 @@ RSpec.describe Event do
       event.add_food_truck(first_food_truck)
       event.add_food_truck(second_food_truck)
       event.add_food_truck(third_food_truck)
-      allow(first_food_truck).to receive(:inventory).and_return({ first_item => 35, second_item => 7 })
-      allow(second_food_truck).to receive(:inventory).and_return({ third_item => 25, fourth_item => 50 })
-      allow(third_food_truck).to receive(:inventory).and_return({ first_item => 65 })
+      first_food_truck.stock(first_item, 35)
+      first_food_truck.stock(second_item, 7)
+      second_food_truck.stock(third_item, 25)
+      second_food_truck.stock(fourth_item, 50)
+      third_food_truck.stock(first_item, 65)
     end
 
     describe '#food_trucks_that_sell' do # rubocop:disable RSpec/MultipleMemoizedHelpers
@@ -116,24 +118,24 @@ RSpec.describe Event do
       it 'can sell items from multiple trucks' do # rubocop:disable RSpec/ExampleLength
         event.sell(first_item, 40)
 
-        expect(total_inventory).to eq({
-                                        first_item => {
-                                          quantity: 60,
-                                          food_trucks: [third_food_truck]
-                                        },
-                                        second_item => {
-                                          quantity: 7,
-                                          food_trucks: [first_food_truck]
-                                        },
-                                        third_item => {
-                                          quantity: 25,
-                                          food_trucks: [second_food_truck]
-                                        },
-                                        fourth_item => {
-                                          quantity: 50,
-                                          food_trucks: [second_food_truck]
-                                        }
-                                      })
+        expect(event.total_inventory).to eq({
+                                              first_item => {
+                                                quantity: 60,
+                                                food_trucks: [third_food_truck]
+                                              },
+                                              second_item => {
+                                                quantity: 7,
+                                                food_trucks: [first_food_truck]
+                                              },
+                                              third_item => {
+                                                quantity: 25,
+                                                food_trucks: [second_food_truck]
+                                              },
+                                              fourth_item => {
+                                                quantity: 50,
+                                                food_trucks: [second_food_truck]
+                                              }
+                                            })
       end
     end
   end
