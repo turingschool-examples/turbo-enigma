@@ -13,5 +13,9 @@ RSpec.describe Item do
     it 'has a name' do
       expect(first_item.name).to eq('Peach Pie (Slice)')
     end
+
+    it 'has a price' do
+      expect(first_item.price).to eq(2.50)
+    end
   end
 end
