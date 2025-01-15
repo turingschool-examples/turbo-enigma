@@ -1,3 +1,5 @@
+require 'date'
+
 class Event
   attr_reader :name, :food_trucks
 
@@ -107,8 +109,12 @@ class Event
     overstocked_food_items.map do |item|
       item[0]     #find_all returns array of hashes with name in array as first element, hence the [0]
     end
-
-
   end
 
+  def date()
+    #Return the start date of the event. By default, this is today's date.
+    #(I note the date formatting in the README is "dd/mm/yyyy" - I ain't mad at it, just atypical for the US)
+    Date.today.strftime("%d/%m/%y")
+    #It is not clear to me if this should be set in initialize(); that would make more sense from a 'potentially breaks other tests' standpoint, I guess...
+  end
 end
