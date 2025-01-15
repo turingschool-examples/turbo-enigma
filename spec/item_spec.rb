@@ -3,19 +3,17 @@
 require_relative 'spec_helper'
 
 RSpec.describe Item do
-  subject(:first_item) { described_class.new({ name: 'Peach Pie (Slice)', price: '$3.75' }) }
-
-  let(:second_item) { described_class.new({ name: 'Apple Pie (Slice)', price: '$2.50' }) }
+  subject(:item) { described_class.new({ name: 'Peach Pie (Slice)', price: '$3.75' }) }
 
   describe '#initialize' do
     it { is_expected.to be_instance_of described_class }
 
     it 'has a name' do
-      expect(first_item.name).to eq('Peach Pie (Slice)')
+      expect(item.name).to eq('Peach Pie (Slice)')
     end
 
     it 'has a price' do
-      expect(first_item.price).to eq(3.75)
+      expect(item.price).to eq(3.75)
     end
   end
 end
