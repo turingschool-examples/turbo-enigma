@@ -12,8 +12,8 @@ class FoodTruck
     @inventory[item] #@inventory is a hash with the item as the key & quantity as the value
   end
 
-  def stock(item, quantity)
-    @inventory[item] += quantity
+  def stock(item, quantity) #will add the item to the inventory hash
+    @inventory[item] += quantity #syntax for adding to a hash is hash[key] += value
   end
 
   def potential_revenue
