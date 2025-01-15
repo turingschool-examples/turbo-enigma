@@ -68,5 +68,28 @@ RSpec.describe Event do
                                              ])
       end
     end
+
+    describe '#total_inventory' do # rubocop:disable RSpec/MultipleMemoizedHelpers
+      it 'can get total inventory' do # rubocop:disable RSpec/ExampleLength
+        expect(event.total_inventory).to eq({
+                                              first_item => {
+                                                quantity: 100,
+                                                food_trucks: [first_food_truck, third_food_truck]
+                                              },
+                                              second_item => {
+                                                quantity: 7,
+                                                food_trucks: [first_food_truck]
+                                              },
+                                              third_item => {
+                                                quantity: 25,
+                                                food_trucks: [second_food_truck]
+                                              },
+                                              fourth_item => {
+                                                quantity: 50,
+                                                food_trucks: [second_food_truck]
+                                              }
+                                            })
+      end
+    end
   end
 end
