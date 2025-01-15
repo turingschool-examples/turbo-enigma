@@ -78,6 +78,7 @@ describe FoodTruck do
             @food_truck.stock(@item1, 35)
 
             expect(@food_truck.sell(@item1, 50)).to eq(false)
+            expect(@food_truck.check_stock(@item1)).to eq(35)
         end
     end
 end
