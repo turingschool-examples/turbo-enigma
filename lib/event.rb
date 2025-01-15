@@ -24,4 +24,33 @@ class Event
       food_truck.inventory[item]
     end
   end
+
+  def sorted_item_list
+    @food_trucks.map do |food_truck|
+      food_truck.inventory.keys.map do |item| # rubocop:disable Style/SymbolProc
+        item.name
+      end
+    end.flatten.uniq.sort
+  end
+
+  def total_inventory # rubocop:disable Metrics/MethodLength
+    total_inventory = {}
+    @food_trucks.each do |food_truck|
+      food_truck.inventory.each do |item, amount|
+        if total_inventory[item].nil?
+          total_inventory[item] = { quantity: amount, food_trucks: [food_truck] }
+        else
+          total_inventory[item][:quantity] += amount
+          total_inventory[item][:food_trucks] << food_truck
+        end
+      end
+    end
+    total_inventory
+  end
+
+  def overstocked_items
+    total_inventory.select do |_item, item_hash|
+      item_hash[:quantity] > 50 && item_hash[:food_trucks].length > 1
+    end.keys
+  end
 end
