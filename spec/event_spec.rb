@@ -22,33 +22,38 @@ describe Event do
 
         @food_truck3 = FoodTruck.new("Palisade Peach Shack")   
         @food_truck3.stock(@item1, 65)
+
+        @event.add_food_truck(@food_truck1)
+        @event.add_food_truck(@food_truck2)
+        @event.add_food_truck(@food_truck3)
     end
 
     describe '#initialize' do
         it 'exists' do
-            expect(@event).to be_a(Event)
-            expect(@event.name).to eq("South Pearl Street Farmers Market")
-            expect(@event.food_trucks).to eq([])
+            event2 = Event.new("South Pearl Street Farmers Market")
+
+            expect(event2).to be_a(Event)
+            expect(event2.name).to eq("South Pearl Street Farmers Market")
+            expect(event2.food_trucks).to eq([])
         end
     end
 
     describe '#add_food_truck' do
         it 'can add food trucks' do
-            @event.add_food_truck(@food_truck1)
-            @event.add_food_truck(@food_truck2)
-            @event.add_food_truck(@food_truck3)
-
             expect(@event.food_trucks).to eq([@food_truck1, @food_truck2, @food_truck3])
         end
     end
 
     describe '#food_truck_names' do
         it 'can list the names of all food trucks' do
-            @event.add_food_truck(@food_truck1)
-            @event.add_food_truck(@food_truck2)
-            @event.add_food_truck(@food_truck3)
-
             expect(@event.food_truck_names).to eq(["Rocky Mountain Pies", "Ba-Nom-a-Nom", "Palisade Peach Shack"])
+        end
+    end
+
+    describe '#trucks_that_sell' do
+        it 'can lists the trucks that sell a givin item' do
+            expect(@event.trucks_that_sell(@item1)).to eq([@food_truck1, @food_truck3])
+            expect(@event.trucks_that_sell(@item4)).to eq([@food_truck2])
         end
     end
 end
