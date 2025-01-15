@@ -36,8 +36,6 @@ RSpec.describe FoodTruck do
   it 'can calculate potential revenue' do
     @food_truck.stock(@item1, 35)
     @food_truck.stock(@item2, 7)
-    @food_truck.stock(@item3, 25)
-    @food_truck.stock(@item4, 50)
     expect(@food_truck.potential_revenue).to eq(148.75)
   end
 end

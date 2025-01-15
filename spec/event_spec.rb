@@ -47,6 +47,7 @@ RSpec.describe Event do
     @food_truck1.stock(@item1, 35)
     @food_truck2.stock(@item2, 50)
     @food_truck3.stock(@item3, 25)
+    @food_truck3.stock(@item4, 10)
     @event.add_food_truck(@food_truck1)
     @event.add_food_truck(@food_truck2)
     @event.add_food_truck(@food_truck3)
