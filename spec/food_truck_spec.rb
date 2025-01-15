@@ -65,4 +65,20 @@ describe FoodTruck do
             expect(@food_truck.potential_revenue).to eq(148.75)
         end
     end
+
+    describe '#sell' do
+        it 'can sell items' do
+            @food_truck.stock(@item1, 35)
+
+            expect@food_truck.sell(@item1, 30)
+            expect(@food_truck.check_stock(@item1)).to eq(5)
+        end
+
+        it 'can not oversell items' do
+            @food_truck.stock(@item1, 35)
+
+            expect(@food_truck.sell(@item1, 50)).to eq(false)
+            expect(@food_truck.check_stock(@item1)).to eq(35)
+        end
+    end
 end
