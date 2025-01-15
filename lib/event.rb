@@ -17,4 +17,23 @@ class Event
   def food_trucks_that_sell(item)
     @food_trucks.select { |truck| truck.inventory.include?(item) }
   end
+
+  def sorted_item_list
+    @food_trucks.flat_map { |truck| truck.inventory.keys.map(&:name) }.uniq.sort
+  end
+
+  def total_inventory
+    inventory = Hash.new { |hash, key| hash[key] = { quantity: 0, food_trucks: [] } }
+    @food_trucks.each do |truck|
+      truck.inventory.each do |item, quantity|
+        inventory[item][:quantity] += quantity
+        inventory[item][:food_trucks] << truck
+      end
+    end
+    inventory
+  end
+
+  def overstocked_items
+    total_inventory.select { |item, data| data[:quantity] > 50 && data[:food_trucks].size > 1 }.keys
+  end
 end
