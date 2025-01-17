@@ -170,17 +170,16 @@ pry(main)> food_truck3.potential_revenue
 
 ## Iteration 3 - Items sold at the Event
 
-Use TDD to update the `Event` class so that it adds the following functionality. You need to complete at least 2 of the 3 methods in Iteration 3 to pass, as well as all of Iteration 1 and 2. 
-
+Use TDD to update the `Event` class so that it adds the following functionality. You need to complete at least 2 of the 3 methods in Iteration 3 to pass, as well as all of Iteration 1 and 2.
 
 1. An `Event` can return a list of *names* of all items the `FoodTrucks` have in stock, sorted alphabetically. This list should not include any duplicate items.
 1. An `Event` can return a hash of total inventory that reports the available inventory of all items sold at the event. Specifically, it should include:
-    - All items available for sale, and each item should identify the total inventory/quantity for that item, as well as a list of `FoodTruck`s that sell that item.
+    * All items available for sale, and each item should identify the total inventory/quantity for that item, as well as a list of `FoodTruck`s that sell that item.
 1. Return a list of overstocked Items for an `Event`. An item is overstocked if it is sold by more than 1 food truck AND the total quantity is greater than 50.
 
 | Method Name               |      Return Value (type)
 | ------------------------- | ---------------------------
-| `sorted_item_list`        | Alphabetically sorted `Array` of all `FoodTruck` item <u>names</u> (no duplicates!). Array of Strings.
+| `sorted_item_list`        | Alphabetically sorted `Array` of all `FoodTruck` item names (no duplicates!). Array of Strings.
 | `total_inventory`         | `Hash` with `Item`s as keys and a sub-hash as the value. The sub-hash should have `quantity` and `food_trucks` keys.(See example below)
 | `overstocked_items`         | `Array` of `Item` objects
 
@@ -211,22 +210,22 @@ Use TDD to update the `Event` class so that it adds the following functionality:
 1. Event #date
 2. Event #sell
 
-| Method Name | Return Value |
-| ----------- | ------------ |
-| `date`       | string ex. `"24/02/2023"` (see below) |
-| `sell(item, quantity)` | boolean (see below) |
+| Method Name | Return Value
+| ----------- | ------------
+| `date`       | string ex. `"24/02/2023"` (see below)
+| `sell(item, quantity)` | boolean (see below)
 
-**#date**
+### #date
 
 You will need to add `require "date"` to the top of your `Event` class.
 
 An `Event` has a start date that is returned in the format of `"dd/mm/yyyy"`. The addition of a `date` to the `Event` should NOT break any previous tests. We want you to test this with a date that is IN THE PAST. In order to test the date method in a way that will work today, tomorrow and on any date in the future, you will need to use a [stub](https://backend.turing.edu/module1/lessons/mocks_stubs#:~:text=full%20Paint%20objects.-,Stubs,-In%20our%20next) 🙂.
 
-**#sell**
+### #sell
 
 An `Event` can sell an item of a given quantity. There are two possible outcomes for selling an item:
 
-  - If the `Event` does not have enough of the item in stock to satisfy the given quantity, this method should return `false`.
-  - If the `Event` has enough of the item in stock to satisfy the given quantity, this method should return `true`. Additionally, this method should reduce the stock of the `FoodTruck`. It should look through the `FoodTruck`s in the order they were added and sell the item from the first `FoodTruck` with that item in stock. If that `FoodTruck` does not have enough stock to satisfy the given quantity, the `FoodTruck`'s entire stock of that item will be depleted, and the remaining quantity will be sold from the next `FoodTruck` with that item in stock. It will follow this pattern until the entire quantity requested has been sold.
+* If the `Event` does not have enough of the item in stock to satisfy the given quantity, this method should return `false`.
+* If the `Event` has enough of the item in stock to satisfy the given quantity, this method should return `true`. Additionally, this method should reduce the stock of the `FoodTruck`. It should look through the `FoodTruck`s in the order they were added and sell the item from the first `FoodTruck` with that item in stock. If that `FoodTruck` does not have enough stock to satisfy the given quantity, the `FoodTruck`'s entire stock of that item will be depleted, and the remaining quantity will be sold from the next `FoodTruck` with that item in stock. It will follow this pattern until the entire quantity requested has been sold.
 
 For example, suppose food_truck1 has 35 `peach pies` and food_truck3 has 65 `peach pies`, and food_truck1 was added to the event first. If the method `sell(<ItemXXX, @name = 'Peach Pie'...>, 40)` is called, the method should return `true`, food_truck1's new stock of `peach pies` should be 0, and food_truck3's new stock of `peach pies` should be 60.
